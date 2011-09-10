@@ -265,8 +265,6 @@ $(document).ready( function() {
 	
 	
 	$("body").bind("data_in",function(evt,data) {
-		console.log('1');
-		console.log(data);
 		if (!data)
 			return;
 		
@@ -334,7 +332,7 @@ $(document).ready( function() {
 			});
 		},
 		update: function() {
-			console.log(thisPlayerMove+' && '+thatPlayerMove);
+			console.log((!(!thisPlayerMove))+' && '+(!(!thatPlayerMove)));
 			if (thisPlayerMove && thatPlayerMove) {
 				state = "Playback";
 				currentPlayStep = 0;
@@ -347,6 +345,7 @@ $(document).ready( function() {
 							thisDeployedBots[i].doAction(thisPlayerMove.bots[i][currentPlayStep]);
 						}
 					}
+					// Haven't deployed enemy bots yet. :(
 //					if (thatPlayerMove.bots[i]) {
 //						if (thatPlayerMove.bots[i][currentPlayStep]) {
 //							thatDeployedBots[i].doAction(thatPlayerMove.bots[i][currentPlayStep]);

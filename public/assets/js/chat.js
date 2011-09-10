@@ -36,8 +36,6 @@ $('document').ready(function() {
 	socket.on('chat',function(data) {
 		var who = (data.from == name)?'self':'other';
 		
-		console.log("monkey");
-		
 		if ($('#chat_conversation_display')[0]) {
 			$('#chat_conversation_display').append('<em class="'+who+'">'+data.from+':</em> '+data.value+'<br />');
 			$('#chat_conversation_display')[0].scrollTop = $('#chat_conversation_display')[0].scrollHeight - $('#chat_conversation_display').outerHeight();
@@ -50,11 +48,7 @@ $('document').ready(function() {
 	});
 	
 	socket.on('data',function(data) {
-		console.log('1');
-		console.log(data);
 		delete(data.type);
-		console.log('2');
-		console.log(data);
 		$('body').trigger('data_in',data);
 	});
 	
@@ -81,7 +75,7 @@ $('document').ready(function() {
 			} else if (data.response == 'no') {
 				$("#challenge_details").html('');
 				$("#challenge_actions").html('');
-				var challenge_message = '<br /><br />Challenge declined...<br/><br /><br />';
+				var challenge_message = '<br /><br />'+data.challengee+' declined your challenge!<br/><br /><br />';
 				$("#challenge_details").append(challenge_message);
 				$("#challenge_actions").append('<br /><br /><button id="ok_challenge">Ok</button>');
 				
@@ -98,7 +92,7 @@ $('document').ready(function() {
 				$("#challenge_details").append(challenge_message);
 				$("#challenge_actions").append('<br /><br /><button id="accept_challenge">Accept</button><button id="cancel">Decline</button>');
 				
-				$("#challenge_popin").bPopup();
+				$("#challenge_popin").bPopup({modalClose:false});
 				
 				// cancelling/declining the challenge
 				$("#cancel").bind('click', function(evt){
@@ -154,7 +148,7 @@ $('document').ready(function() {
 		$("#challenge_details").append(challenge_message);
 		$("#challenge_actions").append('<br /><br /><button id="accept_challenge">Yes</button><button id="cancel">No</button>');
       	
-		$("#challenge_popin").bPopup();
+		$("#challenge_popin").bPopup({modalClose:false});
 		
 		// cancelling/declining the challenge
 		$("#cancel").bind('click', function(evt){
@@ -177,11 +171,33 @@ $('document').ready(function() {
 		var val = $('#message').val();
 		if (!val)
 			val = $('#game_message').val();
+		if (val.substr(0,11) == '/challenge ' && val.length > 11 && room == "lobby") {
+			var challengee = val.substr(11);
+			if (challengee == name) {
+				$('#message').val('');
+				return false;
+			}
+			$('#users_list_display a').each(function(idx,item) {
+				if (item.innerHTML == challengee) {
+					$(item).trigger("click");
+					return;
+				}
+				
+				$('#chat_conversation_display').append(challengee+' is not in the room.<br />');
+			});
+			$('#message').val('');
+			return;
+		}
 		if (val == '/clear') {
 			$('#chat_conversation_display').html('');
 			$('#game_chat_conversation_display').html('');
 			$('#message').val('');
 			$('#game_message').val('');
+			return false;
+		}
+		if (val.substr(0,1) == '/') {
+			$('#chat_conversation_display').append('Invalid command try <span style="color:#fff;">/clear</span> or <span style="color:#fff;">/challenge <em>username</em></span>.<br />');
+			$('#message').val('');
 			return false;
 		}
 		
