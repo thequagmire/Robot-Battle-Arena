@@ -1,0 +1,21 @@
+{{{errorlist}}}
+<br />
+<form method="post" action="/newacct">
+	name: <input name="name" value="{{# values }}{{ name }}{{/ values }}" {{#nameError}}style="background: #f66;"{{/nameError}} /><br />
+	email: <input name="email" value="{{# values }}{{ email }}{{/ values }}" {{#emailError}}style="background: #f66;"{{/emailError}} /><br />
+	pass: <input type="password" name="password" {{#passwordError}}style="background: #f66;"{{/passwordError}} /><br />
+	pass confirm: <input type="password" name="password_confirm" {{#confirmError}}style="background: #f66;"{{/confirmError}} /><br />
+	<input type="submit" value="setup" /><br /><br />
+</form>
+
+<a href="/">Back to login</a><br /><br />
+
+
+<script type="text/javascript" language="javascript">
+// <![CDATA[
+	$('document').ready(function() {
+		$('input').bind('keydown',function() {$(this).css({background:""});});
+		$('input').bind('onchange',function() {$(this).css({background:""});});
+	});
+// ]]>
+</script>

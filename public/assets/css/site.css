@@ -1,0 +1,363 @@
+body{
+background-color: #000000;
+margin: 30px 0px;
+padding:0px;
+text-align:center;
+}
+
+#index_container {
+background-image: url('/assets/images/index.jpg');
+background-repeat: no-repeat;
+margin:0px auto;
+text-align:left;
+padding:15px;
+height: 419px;
+width:866px;
+}
+
+.index_footer {
+text-align: right;
+width: 860px;
+}
+
+.index_footer a{
+text-decoration: none;
+color: #00AEFF;
+font-family: Arial;
+font-size: 10px;
+}
+
+.login_link{
+margin-left: 370px;
+margin-top: 350px;
+}
+
+.login_link a:link{
+text-decoration: none;
+color: #000000;
+}
+
+.login_link a:active{
+text-decoration: none;
+color: #000000;
+}
+
+.login_link a:visited{
+text-decoration: none;
+color: #000000;
+}
+
+.login_link a:hover{
+text-decoration: underline;
+font-weight: bold;
+color: #FFFFFF;
+}
+
+#main_container {
+background-image: url('/assets/images/main.jpg');
+background-repeat: no-repeat;
+margin: 0px auto;
+text-align: left;
+padding: 2px;
+height: 419px;
+width: 866px;
+}
+
+#chat_user_display{
+padding: 0 0 5px 10px;
+position: relative;
+float: right;
+border: 1px solid #CCCCCC;
+background-color: #000000;
+opacity: 0.6;
+height: 30px;
+width: 250px;
+font-family: Arial;
+font-size: 12px;
+color: #00FF00;
+}
+
+#chat_user_display p a {
+	float:right;
+	margin-right:10px;
+	color: #00FF00;
+	text-decoration: none;
+}
+
+#chat_user_display p a:hover {
+	text-decoration: underline;
+}
+
+#chat_conversation_display{
+padding: 3px;
+position: relative;
+float: left;
+margin-left: 0px; 
+width: 500px;
+height: 360px;
+font-family: Arial;
+font-size: 12px;
+color: #00FF00;
+border: 1px solid #CCCCCC;
+background-color: #000000;
+opacity:0.6;
+overflow : auto;
+}
+
+#chat_conversation_display em.self{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+#chat_conversation_display em.other{
+	color: #060;
+	font-weight: bold;
+}
+
+.user_list_self {
+	color: #fff;
+	font-weight: bold;
+}
+
+#users_list_display{
+padding: 0 0 5px 10px;
+position: relative;
+float: right;
+margin-left: 0px;
+margin-top: 30px; 
+width: 250px;
+height: 280px;
+font-family: Arial;
+font-size: 12px;
+color: #00FF00;
+border: 1px solid #CCCCCC;
+background-color: #000000;
+opacity:0.6;
+overflow : auto;
+}
+
+.chat_input_display{
+margin-top: 380px;
+}
+
+#message {
+font-family: Arial;
+font-size: 12px;
+font-weight: bold;
+color: #00FF00;
+border: 1px solid #CCCCCC;
+background-color: #000000;
+opacity:0.6;
+width: 800px;
+height: 20px;
+padding: 5px;
+}
+
+#arena {
+background-image: url('/assets/images/field.jpg');
+}
+
+#users_list_display a{
+text-decoration: none;
+color: #00FF00;
+font-family: Arial;
+font-size: 12px;
+}
+
+#users_list_display a:hover{
+text-decoration: underline;
+}
+
+#myUserName {
+color: #FFFFFF;
+font-family: Arial;
+font-size: 14px;
+font-weight: bold;
+}
+
+#logout_message{
+margin-left: 320px;
+margin-top: 100px;
+margin-bottom: 250px;
+}
+
+#logout_link a{
+text-decoration: none;
+font-family: Arial;
+font-size: 10px;
+padding-left: 3px;
+}
+
+#logout_link a:hover{
+text-decoration: underline;
+}
+
+#logout_link a:visted{
+text-decoration: none;
+}
+
+#logout_link a:active{
+text-decoration: none;
+}
+
+#challenge_popin {
+display:none;
+position:absolute;
+width:300px;
+height:200px;
+border: 1px solid #ccc;
+background: #000;
+top: 100px;
+color: #FFFFFF;
+}
+
+
+#controlSection {
+width:940px;
+border: 1px solid #ccc;
+height:200px;
+margin: 0px auto;
+text-align: left;
+}
+
+
+#robotInventory {
+width:200px;
+height:200px;
+float:left;
+border-right: 1px dashed #ccc;
+}
+
+#robotDeployment {
+width: 50px;
+height:200px;
+float:left;
+border-right: 1px solid #ccc;
+}
+
+#gameChatHolder {
+background-image: url('/assets/images/main.jpg');
+background-repeat: no-repeat;
+background-position: center center;
+width: 687px;
+height:200px;
+float:left;
+}
+
+#game_chat_conversation_display{
+border-right: 1px solid #fff;
+padding: 3px;
+margin-left: 0px;
+width: 682px;;
+height: 150px;
+font-family: Arial;
+font-size: 12px;
+color: #00FF00;
+border-bottom: 1px solid #CCCCCC;
+margin-bottom: 7px;
+background-color: #000000;
+opacity:0.6;
+overflow: auto;
+}
+
+#game_chat_conversation_display em.self{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+#game_chat_conversation_display em.other{
+	color: #060;
+	font-weight: bold;
+}
+
+#game_chat_conversation_inner {
+padding:3px;
+}
+
+#game_message {
+font-family: Arial;
+font-size: 12px;
+font-weight: bold;
+color: #00FF00;
+border: 1px solid #CCCCCC;
+background-color: #000000;
+opacity:0.6;
+width: 600px;
+height: 20px;
+padding: 5px;
+margin-left: 10px;
+}
+
+#depot1 {
+background-image: url('/assets/images/drop_one.jpg');
+background-repeat: no-repeat;
+width:30px;
+height:40px;
+margin-top:13px;
+margin-left:8px;
+border:1px dotted #666;
+}
+
+#depot2 {
+background-image: url('/assets/images/drop_two.jpg');
+background-repeat: no-repeat;
+width:30px;
+height:40px;
+margin-top:10px;
+margin-left:8px;
+border:1px dotted #666;
+}
+
+
+#depot3 {
+background-image: url('/assets/images/drop_three.jpg');
+background-repeat: no-repeat;
+width:30px;
+height:40px;
+margin-top:10px;
+margin-left:8px;
+border:1px dotted #666;
+}
+
+
+#makemove {
+width:30px;
+height:20px;
+text-align:center;
+line-height:20px;
+margin-top:10px;
+margin-left:8px;
+border:1px dotted #666;
+color: #ccc;
+font-size:10px;
+cursor: pointer;
+}
+
+
+
+.dragbot_red {
+width: 25px;
+height: 25px;
+background-image: url('/assets/images/robot_red_1.png');
+background-position: center center;
+background-repeat: no-repeat;
+background-color: #666;
+border:1px solid #999;
+margin:5px;
+cursor:move;
+float:left;
+}
+
+.dragbot_blue {
+width: 25px;
+height: 25px;
+background-image: url('/assets/images/robot_blue_1.png');
+background-position: center center;
+background-repeat: no-repeat;
+background-color: #666;
+border:1px solid #999;
+margin:5px;
+cursor:move;
+float:left;
+}
+

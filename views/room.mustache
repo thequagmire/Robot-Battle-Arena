@@ -1,0 +1,35 @@
+<canvas id="arena" width='940' height='440'></canvas>
+<div id="controlSection">
+	<div id="robotInventory"></div>
+	<div id="robotDeployment">
+		<div id="depot1"></div>
+		<div id="depot2"></div>
+		<div id="depot3"></div>
+		<div id="makemove">send</div>
+	</div>
+  
+	<div id="gameChatHolder">
+		<div id="game_chat_conversation_display">
+			<div id="game_chat_conversation_inner"></div>
+		</div>
+		<div id="game_chat_input_display">
+			<form method='post' id='chat_form' action='#' onsubmit='return false'>
+				<input type='text' name='message' id="game_message" />
+			</form>
+		</div>
+	</div>
+</div>
+    
+
+
+
+
+
+
+
+
+<script type="text/javascript" language="javascript" src="http://localhost:3030/socket.io/socket.io.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/jaws.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/chat.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/game.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/audio_box.js"></script>

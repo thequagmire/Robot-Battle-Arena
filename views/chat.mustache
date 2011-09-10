@@ -1,0 +1,33 @@
+<div id="main_container">
+	<div id="chat_conversation_display"></div>
+
+	<div id="chat_user_display">
+		<p>COMMANDER: 
+			<span id="myUserName">{{name}}</span>
+			<a href="/logout" id="logout_link">[logout]</a>
+		</p>
+	</div>
+	<div id="users_list_display"></div>
+
+	<div class="chat_input_display">
+		<form method='post' id='chat_form' action='#' onsubmit='return false'>
+			<input type='text' name='message' id='message' />
+		</form>
+	</div>
+	<div id="challenge_popin">
+		<div id="challenge_details"></div>
+		<div id="challenge_actions"></div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" language="javascript" src="http://localhost:3030/socket.io/socket.io.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/chat.js"></script>
+<script type="text/javascript" language="javascript" src="/assets/js/jquery_bpopup.js"></script>

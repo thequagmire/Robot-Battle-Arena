@@ -1,0 +1,33 @@
+#chat {
+	height: 300px;
+	width: 600px;
+	padding: 5px;
+	font-family: arial;
+	background-color: #333;
+	color: #eee;
+	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#chat em {
+	font-style: normal;
+}
+
+#chat em.self {
+	color: #fff174;
+}
+
+#chat em.other {
+	color: #f174ff;
+}
+
+#chat_input {
+	width: 600px;
+	margin-top: 5px;
+}
+
+#users {
+	float: right;
+}
+
