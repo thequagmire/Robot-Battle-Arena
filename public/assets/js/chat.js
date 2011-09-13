@@ -1,66 +1,120 @@
-var socketAPI = {};
+var chatCommands = chatCommands || {};
 
 $('document').ready(function() {
-
-	var socket = io.connect('http://localhost:3030');
-	
-	  
-	  
-	socket.on('welcome', function (data) {
-		if (data.next == 'checkin') {
-			var msg = {
-				 type : 'checkin'
-				,room : room
-				,name : name
-				,email: email
-			};
+	chatCommands.challenge = function(param) {
+		if (room == 'lobby') {
+			if (param == name) {
+				$('#chat_conversation_display').append("You can't challenge yourself.<br />");
+				$('#message').val('');
+				return false;
+			}
+			var inRoom = false;
 			
-			socket.send(JSON.stringify(msg));
-		}
-	});
-	
-	socket.on('roomlist',function(data) {
-		$('#users_list_display').html('');
-		for (var i in data) {
-			if (data[i].name != name) {
-				if (room == 'lobby')
-					$('#users_list_display').append('<a href="javascript:;" id="id_'+data[i].id+'">'+data[i].name+'</a><br />');
-				else
-					$('#users_list_display').append(data[i].name+'<br />');
-			} else {
-				$('#users_list_display').append('<span class="user_list_self">'+data[i].name+'</span><br />');
+			$('#users_list_display a').each(function(idx,item) {
+				if (item.innerHTML == param) {
+					$(item).trigger("click");
+					inRoom = true;
+				}
+			});
+			
+			if (!inRoom) {
+				$('#chat_conversation_display').append(param+' is not in the room.<br />');
 			}
 		}
-	});
+	}
+	chatCommands.clear = function() {
+		$('#chat_conversation_display').html('');
+		$('#game_chat_conversation_display').html('');
+		$('#message').val('');
+		$('#game_message').val('');
+	}
+});
 	
-	socket.on('chat',function(data) {
-		var who = (data.from == name)?'self':'other';
+	
+	
+$('document').ready(function() {
+	var socketAPI = socketAPI || {};
+	
+	// Setup socketAPI
+	(function() {
+		var socket = io.connect('http://localhost:3030');
 		
-		if ($('#chat_conversation_display')[0]) {
-			$('#chat_conversation_display').append('<em class="'+who+'">'+data.from+':</em> '+data.value+'<br />');
-			$('#chat_conversation_display')[0].scrollTop = $('#chat_conversation_display')[0].scrollHeight - $('#chat_conversation_display').outerHeight();
-		}
+		socket.on('welcome', function (data) {
+			if (data.next == 'checkin') {
+				var msg = {
+					 type : 'checkin'
+					,room : room
+					,name : name
+					,email: email
+				};
+				
+				socket.send(JSON.stringify(msg));
+			}
+		});
 		
-		if ($('#game_chat_conversation_display')[0]) {
-			$('#game_chat_conversation_display').append('<em class="'+who+'">'+data.from+':</em> '+data.value+'<br />');
-			$('#game_chat_conversation_display')[0].scrollTop = $('#game_chat_conversation_display')[0].scrollHeight - $('#game_chat_conversation_display').outerHeight();
+		socket.on('roomlist',function(data) {
+			$('#users_list_display').html('');
+			for (var i in data) {
+				if (data[i].name != name) {
+					if (room == 'lobby')
+						$('#users_list_display').append('<a href="javascript:;" id="id_'+data[i].id+'">'+data[i].name+'</a><br />');
+					else
+						$('#users_list_display').append(data[i].name+'<br />');
+				} else {
+					$('#users_list_display').append('<span class="user_list_self">'+data[i].name+'</span><br />');
+				}
+			}
+		});
+		
+		socket.on('chat',function(data) {
+			var who = (data.from == name)?'self':'other';
+			
+			if ($('#chat_conversation_display')[0]) {
+				$('#chat_conversation_display').append('<em class="'+who+'">'+data.from+':</em> '+data.value+'<br />');
+				$('#chat_conversation_display')[0].scrollTop = $('#chat_conversation_display')[0].scrollHeight - $('#chat_conversation_display').outerHeight();
+			}
+			
+			if ($('#game_chat_conversation_display')[0]) {
+				$('#game_chat_conversation_display').append('<em class="'+who+'">'+data.from+':</em> '+data.value+'<br />');
+				$('#game_chat_conversation_display')[0].scrollTop = $('#game_chat_conversation_display')[0].scrollHeight - $('#game_chat_conversation_display').outerHeight();
+			}
+		});
+		
+		socket.on('data',function(data) {
+			delete(data.type);
+			$('body').trigger('data_in',data);
+		});
+		
+		
+		socket.on('left',function(data) {
+			if (data.name != name) {
+				$('#chat_conversation_display').append(data.name+' left the room.<br />');
+			}
+			$('body').trigger('left',data);
+		});
+		
+		socket.on('join',function(data) {
+			if (data.name != name) {
+				$('#chat_conversation_display').append(data.name+' joined the room.<br />');
+			}
+			$('body').trigger('join',data);
+		});
+		
+		
+		socketAPI.sendData = function(data) {
+			data.type = data.type || 'data';
+			socket.send(JSON.stringify(data));
 		}
-	});
-	
-	socket.on('data',function(data) {
-		delete(data.type);
-		$('body').trigger('data_in',data);
-	});
-	
-	socket.on('left',function(data) {
-		$('body').trigger('left',data.name);
-	});
-	
-	socket.on('join',function(data) {
-		$('body').trigger('join',data.name);
-	});
+	})();
 	
 	
+	
+	
+	
+	
+	
+	
+	// This needs to be modularized
 	$('body').bind('data_in',function(evt, data) {
 		if (room == 'lobby') {
 			if (data.challengee == name && data.response) {
@@ -119,26 +173,6 @@ $('document').ready(function() {
 		}
 	});
 	
-	$('body').bind('left',function(evt, who) {
-		if (who != name) {
-			$('#chat_conversation_display').append(who+' left the room.<br />');
-		}
-	});
-	
-	$('body').bind('join',function(evt, who) {
-		if (who != name) {
-			$('#chat_conversation_display').append(who+' joined the room.<br />');
-		}
-	});
-	
-	
-	
-	socketAPI.sendData = function(data) {
-		data.type = 'data';
-		socket.send(JSON.stringify(data));
-	}
-	
-	
 	
 	$('#users_list_display').delegate('a','click',function(evt) {
 		var otherName = $(evt.target).html();
@@ -167,46 +201,38 @@ $('document').ready(function() {
 			});
 		});
 	});
+	
+	
+	
 	$('#chat_form').bind("submit",function() {
 		var val = $('#message').val();
 		if (!val)
 			val = $('#game_message').val();
-		if (val.substr(0,11) == '/challenge ' && val.length > 11 && room == "lobby") {
-			var challengee = val.substr(11);
-			if (challengee == name) {
-				$('#message').val('');
-				return false;
-			}
-			$('#users_list_display a').each(function(idx,item) {
-				if (item.innerHTML == challengee) {
-					$(item).trigger("click");
-					return;
-				}
-				
-				$('#chat_conversation_display').append(challengee+' is not in the room.<br />');
-			});
-			$('#message').val('');
-			return;
-		}
-		if (val == '/clear') {
-			$('#chat_conversation_display').html('');
-			$('#game_chat_conversation_display').html('');
-			$('#message').val('');
-			$('#game_message').val('');
-			return false;
-		}
+		
+		
+		$('#message').val('');
+		
+		// parse chat command
 		if (val.substr(0,1) == '/') {
-			$('#chat_conversation_display').append('Invalid command try <span style="color:#fff;">/clear</span> or <span style="color:#fff;">/challenge <em>username</em></span>.<br />');
-			$('#message').val('');
-			return false;
+			val += ' ';
+			var cmd = val.substr(1,val.search(/\s/)-1);
+			if (chatCommands[cmd]) {
+				var param = val.substr(val.search(/\s/)+1).trim();
+				var shouldContinue = chatCommands[cmd](param);
+				return;
+			} else {
+				$('#chat_conversation_display').append('Invalid command "/'+cmd+'"<br />');
+				return;
+			}
 		}
+		
 		
 		var msg = {
 			 type : 'chat'
 			,from : name
 			,value: val
 		};
-		socket.send(JSON.stringify(msg));
+		socketAPI.sendData(msg);
 		$('#message').val('');
 		$('#game_message').val('');
 		return false;
